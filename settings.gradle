@@ -17,6 +17,6 @@ pluginManagement {
         }
     }
 }
-rootProject.name = 'mpp-mobile-skeleton-6'
+rootProject.name = 'mpp-mobile-skeleton'
 
 include ':app'
