@@ -29,7 +29,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0-rc02'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }
@@ -67,6 +67,28 @@ kotlin {
         iosMain {
         }
         iosTest {
+        }
+    }
+}
+
+// Please set configuration.build.dir in gradle.properties before running this task.
+// In this directory, you will get a native framework capable to be included into XCode project.
+// Alternatively, you can directly run this task from XCode.
+// In this case you will need additional XCode project like here:
+// https://github.com/JetBrains/kotlin-mpp-example/tree/master/iosApp
+task copyFramework {
+    def buildType = project.findProperty("kotlin.build.type") ?: "DEBUG"
+    def target = project.findProperty("kotlin.target") ?: "ios"
+    dependsOn "link${buildType.toLowerCase().capitalize()}Framework${target.capitalize()}"
+
+    doLast {
+        def srcFile = kotlin.targets."$target".compilations.main.getBinary("FRAMEWORK", buildType)
+        def targetDir = getProperty("configuration.build.dir")
+        copy {
+            from srcFile.parent
+            into targetDir
+            include 'app.framework/**'
+            include 'app.framework.dSYM'
         }
     }
 }
