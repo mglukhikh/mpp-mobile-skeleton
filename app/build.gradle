@@ -39,7 +39,9 @@ kotlin {
         // For ARM, preset should be changed to presets.android_arm32 or presets.android_arm64
         fromPreset(presets.android, 'android')
         // For ARM, preset should be changed to presets.iosArm32 or presets.iosArm64
-        fromPreset(presets.iosX64, 'ios')
+        fromPreset(presets.iosX64, 'ios') {
+            compilations.main.outputKinds('FRAMEWORK')
+        }
     }
     sourceSets {
         commonMain {
