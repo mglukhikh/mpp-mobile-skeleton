@@ -1,5 +1,5 @@
 import UIKit
-import sample
+import app
 
 class ViewController: UIViewController {
 
